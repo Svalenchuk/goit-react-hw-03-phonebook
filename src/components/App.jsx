@@ -15,6 +15,19 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contactsStored = localStorage.getItem('contacts');
+    if (contactsStored) {
+      this.setState({ contacts: JSON.parse(contactsStored) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+     if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+   }
+
   handleChange = value => {
      this.setState({ filter: value });  
   };
@@ -56,7 +69,7 @@ export class App extends Component {
           justifyContent: 'center',
           alignItems: 'center',
           fontSize: 20,
-          color: '#010101',
+          color: '#010101', 
         }}
       >
         <h1>Phonebook</h1>
